@@ -25,7 +25,7 @@ export async function createUser(email: string) {
   return {
     id: crypto.randomUUID(),
     email,
-    name: email.split("@")[0] ?? "friend",
+    name: email.split("@")[0] || "friend",
     plan: "free",
   } satisfies User;
 }
