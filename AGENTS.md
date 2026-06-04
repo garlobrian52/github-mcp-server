@@ -17,6 +17,8 @@ See `.github/copilot-instructions.md` for full contributor workflow, project str
 
 ### Gotchas
 
+- On Cursor Cloud VMs, `gh` is often pre-authenticated. Export a runtime token with `export GITHUB_PERSONAL_ACCESS_TOKEN="$(gh auth token)"` before starting the server. Integration tokens (`ghs_*`) may return 403 on `get_me`; use a public read tool such as `search_repositories` for smoke tests.
+- For a quick stdio MCP smoke test without an MCP host, run `script/get-me` (full initialize → `notifications/initialized` → `tools/call` handshake) or see that script for the JSON-RPC sequence.
 - The server requires `GITHUB_PERSONAL_ACCESS_TOKEN` to be set at runtime. Without it, the server won't start. For unit tests, this is not needed — tests mock the GitHub API.
 - E2E tests (`e2e/`) require Docker and a real GitHub PAT (`GITHUB_MCP_SERVER_E2E_TOKEN`). They are not runnable without these.
 - `script/lint` auto-downloads `golangci-lint` v2.5.0 to `bin/` on first run. This is cached across runs.
