@@ -1,37 +1,147 @@
-export default function Page() {
-  return (
-    <main className="flex min-h-screen items-center justify-center bg-black px-6 text-neutral-400">
-      <div className="flex w-full max-w-md flex-col items-start gap-8">
-        <svg
-          fill="currentColor"
-          viewBox="0 0 147 70"
-          xmlns="http://www.w3.org/2000/svg"
-          aria-hidden="true"
-          className="size-10 text-white"
-        >
-          <path d="M56 50.2031V14H70V60.1562C70 65.5928 65.5928 70 60.1562 70C57.5605 70 54.9982 68.9992 53.1562 67.1573L0 14H19.7969L56 50.2031Z" />
-          <path d="M147 56H133V23.9531L100.953 56H133V70H96.6875C85.8144 70 77 61.1856 77 50.3125V14H91V46.1562L123.156 14H91V0H127.312C138.186 0 147 8.81439 147 19.6875V56Z" />
-        </svg>
+import Link from "next/link"
+import { FIXES, fixHref, FOOTER_FIX_LINKS } from "@/lib/fixes"
+import { Wifi, Monitor, Smartphone, Printer, KeyRound, Tv } from "lucide-react"
 
-        <div className="space-y-3">
-          <h1 className="text-balance text-2xl font-semibold tracking-tight text-white">
-            To get started, describe what you want to build.
-          </h1>
-          <p className="text-pretty text-sm leading-relaxed text-neutral-500">
-            This is the default page for a fresh v0 project. Open the prompt and
-            tell v0 what to create, or browse the{' '}
-            <a
-              href="https://v0.app/templates"
-              target="_blank"
-              rel="noreferrer"
-              className="text-neutral-300 underline underline-offset-4 hover:text-white"
+const categoryIcons = {
+  wifi: Wifi,
+  computer: Monitor,
+  phone: Smartphone,
+  printer: Printer,
+  account: KeyRound,
+  streaming: Tv,
+}
+
+export default function HomePage() {
+  return (
+    <div className="min-h-screen flex flex-col">
+      <header className="sticky top-0 z-50 border-b bg-[var(--background)]/95 backdrop-blur supports-[backdrop-filter]:bg-[var(--background)]/80">
+        <div className="mx-auto flex h-14 max-w-5xl items-center justify-between px-4">
+          <Link href="/" className="text-lg font-semibold tracking-tight">
+            FixNow
+          </Link>
+          <nav className="flex items-center gap-4">
+            <Link
+              href="/fixes"
+              className="text-sm text-[var(--muted-foreground)] hover:text-[var(--foreground)] transition-colors"
             >
-              Community
-            </a>{' '}
-            for inspiration.
-          </p>
+              All Fixes
+            </Link>
+          </nav>
         </div>
-      </div>
-    </main>
+      </header>
+
+      <main className="flex-1">
+        {/* Hero */}
+        <section className="px-4 py-16 md:py-24">
+          <div className="mx-auto max-w-3xl text-center">
+            <h1 className="text-3xl font-semibold tracking-tight md:text-5xl text-balance">
+              Fix your tech in minutes
+            </h1>
+            <p className="mt-4 text-[var(--muted-foreground)] text-base md:text-lg max-w-xl mx-auto text-pretty">
+              Step-by-step guides for everyday problems. No jargon, no phone trees, just solutions.
+            </p>
+            <div className="mt-8 flex flex-col sm:flex-row items-center justify-center gap-3">
+              <Link
+                href="/fixes"
+                className="inline-flex h-12 w-full sm:w-auto min-w-[160px] items-center justify-center rounded-[var(--radius)] bg-[var(--primary)] px-6 text-sm font-medium text-[var(--primary-foreground)] transition-colors hover:opacity-90"
+              >
+                Fix something now
+              </Link>
+            </div>
+          </div>
+        </section>
+
+        {/* Fix Grid */}
+        <section id="fixes" className="px-4 pb-16">
+          <div className="mx-auto max-w-5xl">
+            <h2 className="text-xl font-semibold tracking-tight mb-6">
+              Common fixes
+            </h2>
+            <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+              {FIXES.map((fix) => {
+                const Icon = categoryIcons[fix.category]
+                return (
+                  <Link
+                    key={fix.slug}
+                    href={fixHref(fix.slug)}
+                    className="group flex flex-col gap-3 rounded-xl border p-5 transition-colors hover:bg-[var(--secondary)]"
+                  >
+                    <div className="flex items-center gap-3">
+                      <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-[var(--primary)]/10">
+                        <Icon className="h-5 w-5 text-[var(--primary)]" />
+                      </div>
+                      <span className="text-xs font-medium text-[var(--primary)]">
+                        {fix.duration}
+                      </span>
+                    </div>
+                    <div>
+                      <h3 className="font-medium group-hover:text-[var(--foreground)]">
+                        {fix.title}
+                      </h3>
+                      <p className="mt-1 text-sm text-[var(--muted-foreground)] line-clamp-2">
+                        {fix.description}
+                      </p>
+                    </div>
+                  </Link>
+                )
+              })}
+            </div>
+            <div className="mt-8 text-center">
+              <Link
+                href="/fixes"
+                className="text-sm font-medium text-[var(--primary)] hover:underline"
+              >
+                See all fixes
+              </Link>
+            </div>
+          </div>
+        </section>
+      </main>
+
+      {/* Footer */}
+      <footer className="border-t py-12 px-4">
+        <div className="mx-auto max-w-5xl">
+          <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
+            <div>
+              <h3 className="font-semibold">FixNow</h3>
+              <p className="mt-2 text-sm text-[var(--muted-foreground)]">
+                Quick fixes for everyday tech problems.
+              </p>
+            </div>
+            <div>
+              <h4 className="text-sm font-medium">Popular Fixes</h4>
+              <ul className="mt-3 space-y-2">
+                {FOOTER_FIX_LINKS.map((link) => (
+                  <li key={link.slug}>
+                    <Link
+                      href={fixHref(link.slug)}
+                      className="text-sm text-[var(--muted-foreground)] hover:text-[var(--foreground)] transition-colors"
+                    >
+                      {link.label}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+            <div>
+              <h4 className="text-sm font-medium">Resources</h4>
+              <ul className="mt-3 space-y-2">
+                <li>
+                  <Link
+                    href="/fixes"
+                    className="text-sm text-[var(--muted-foreground)] hover:text-[var(--foreground)] transition-colors"
+                  >
+                    All Fixes
+                  </Link>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div className="mt-8 border-t pt-8 text-center text-sm text-[var(--muted-foreground)]">
+            {new Date().getFullYear()} FixNow
+          </div>
+        </div>
+      </footer>
+    </div>
   )
 }
