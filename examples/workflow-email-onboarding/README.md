@@ -73,6 +73,8 @@ npx workflow inspect runs
 
 Deploy to Vercel for production-grade durable execution. No extra Workflow configuration is required beyond `withWorkflow()` in `next.config.ts`.
 
+Speed Insights is already integrated in `src/app/layout.tsx` and will be rendered only in production (`NODE_ENV=production`).
+
 ## Project layout
 
 ```text
